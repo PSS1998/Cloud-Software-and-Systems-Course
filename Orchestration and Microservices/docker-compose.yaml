@@ -1,0 +1,15 @@
+services:
+  flask:
+    container_name: flaskbackend
+    image: flaskbackend:v1
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:6.0.2
+    container_name: mongo
+    ports:
+      - "1048:27017"
+
