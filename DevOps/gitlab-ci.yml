@@ -1,0 +1,28 @@
+image: python:3.10.8-alpine3.16
+
+variables:
+  app_name: "main.py"
+
+
+before_script:
+  - python -V  # Print out python version for debugging
+  - python3 -m pip install -r requirements.txt
+
+apilint:
+  script:
+    - python3 -m pip install pylint
+    - python3 -m pylint ./app/$app_name
+
+apitest:
+  script:
+    - python3 -m pip install pytest
+    - python3 -m pytest
+
+apicompile:
+  script:
+    - python3 -m compileall ./app
+
+apideploy:
+  image: docker:20.10
+  script:
+    - docker build --network host -t courses-api:v1 .
